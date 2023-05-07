@@ -7,11 +7,14 @@ const DIR_PATH = path.resolve(__dirname, FOLDER_NAME);
 const DIR_COPY_PATH = path.resolve(__dirname, FOLDER_COPY_NAME);
 
 function makeDir(source, destination) {
-  fs.mkdir(destination, {recursive: true}, (err, path) => {
+  fs.rm(destination, {recursive: true, force: true}, (err) => {
+    if (err) throw err;
+    fs.mkdir(destination, {recursive: true}, (err, path) => {
       if (err) throw err;
       if (path) console.log(`Folder ${destination} was created successfully!`);
       copyDir(source, path || destination);
     });
+  });
 }
 
 function copyDir(source, destination) {
